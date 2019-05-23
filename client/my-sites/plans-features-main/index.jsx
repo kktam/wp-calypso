@@ -40,8 +40,9 @@ import {
 	planMatches,
 	findPlansKeys,
 	getPlan,
-	isFreePlan,
+	getPopularPlanType,
 	isBloggerPlan,
+	isFreePlan,
 } from 'lib/plans';
 import Button from 'components/button';
 import SegmentedControl from 'components/segmented-control';
@@ -52,6 +53,7 @@ import isHappychatAvailable from 'state/happychat/selectors/is-happychat-availab
 import { getDiscountByName } from 'lib/discounts';
 import { getDecoratedSiteDomains } from 'state/sites/domains/selectors';
 import { getSitePlan, getSiteSlug } from 'state/sites/selectors';
+import { getSiteType } from 'state/signup/steps/site-type/selectors';
 import { getTld } from 'lib/domains';
 import { isDiscountActive } from 'state/selectors/get-active-discount.js';
 import { selectSiteId as selectHappychatSiteId } from 'state/help/actions';
@@ -92,6 +94,7 @@ export class PlansFeaturesMain extends Component {
 			selectedPlan,
 			withDiscount,
 			siteId,
+			siteType,
 			plansWithScroll,
 		} = this.props;
 
@@ -126,7 +129,7 @@ export class PlansFeaturesMain extends Component {
 					withDiscount={ withDiscount }
 					withScroll={ plansWithScroll }
 					popularPlanSpec={ {
-						type: customerType === 'personal' ? TYPE_PREMIUM : TYPE_BUSINESS,
+						type: getPopularPlanType( siteType ),
 						group: GROUP_WPCOM,
 					} }
 					siteId={ siteId }
@@ -480,6 +483,7 @@ export default connect(
 			siteId: siteId,
 			siteSlug: getSiteSlug( state, get( props.site, [ 'ID' ] ) ),
 			sitePlanSlug: sitePlan && sitePlan.product_slug,
+			siteType: getSiteType( state ),
 		};
 	},
 	{
