@@ -36,13 +36,13 @@ import QueryPlans from 'components/data/query-plans';
 import QuerySitePlans from 'components/data/query-site-plans';
 import { isEnabled } from 'config';
 import {
-	plansLink,
-	planMatches,
 	findPlansKeys,
 	getPlan,
 	getPopularPlanType,
 	isBloggerPlan,
 	isFreePlan,
+	planMatches,
+	plansLink,
 } from 'lib/plans';
 import Button from 'components/button';
 import SegmentedControl from 'components/segmented-control';
