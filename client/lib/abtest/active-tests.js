@@ -153,4 +153,12 @@ export default {
 		localeTargets: 'any',
 		localeExceptions: [ 'en' ],
 	},
+	popularPlanBy: {
+		datestamp: '20190529',
+		variations: {
+			siteType: 50,
+			customerType: 50,
+		},
+		defaultVariation: 'siteType',
+	},
 };
