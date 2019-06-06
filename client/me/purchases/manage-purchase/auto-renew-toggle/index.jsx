@@ -6,6 +6,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -15,6 +16,7 @@ import { disableAutoRenew, enableAutoRenew } from 'lib/upgrades/actions';
 import { getCurrentUserId } from 'state/current-user/selectors';
 import { isFetchingUserPurchases } from 'state/purchases/selectors';
 import { fetchUserPurchases } from 'state/purchases/actions';
+import { errorNotice } from 'state/notices/actions';
 import AutoRenewDisablingDialog from './auto-renew-disabling-dialog';
 import FormToggle from 'components/forms/form-toggle';
 
@@ -25,6 +27,7 @@ class AutoRenewToggle extends Component {
 		planName: PropTypes.string.isRequired,
 		isEnabled: PropTypes.bool.isRequired,
 		fetchingUserPurchases: PropTypes.bool,
+		errorNotice: PropTypes.func.isRequired,
 	};
 
 	static defaultProps = {
@@ -48,12 +51,14 @@ class AutoRenewToggle extends Component {
 			purchase: { id: purchaseId },
 			currentUserId,
 			isEnabled,
+			translate,
 		} = this.props;
 
 		const updateAutoRenew = isEnabled ? disableAutoRenew : enableAutoRenew;
+		const isTogglingToward = ! isEnabled;
 
 		this.setState( {
-			isTogglingToward: ! isEnabled,
+			isTogglingToward,
 			isRequesting: true,
 		} );
 
@@ -61,9 +66,16 @@ class AutoRenewToggle extends Component {
 			this.setState( {
 				isRequesting: false,
 			} );
-			if ( success ) {
-				this.props.fetchUserPurchases( currentUserId );
+
+			if ( ! success ) {
+				this.props.errorNotice(
+					isTogglingToward
+						? translate( "We've failed to enable auto-renewal for you. Please try again later." )
+						: translate( "We've failed to disable auto-renewal for you. Please try again later." )
+				);
 			}
+
+			this.props.fetchUserPurchases( currentUserId );
 		} );
 	};
 
@@ -124,5 +136,6 @@ export default connect(
 	} ),
 	{
 		fetchUserPurchases,
+		errorNotice,
 	}
-)( AutoRenewToggle );
+)( localize( AutoRenewToggle ) );
