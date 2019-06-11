@@ -23,7 +23,6 @@ class Full_Site_Editing {
 		add_action( 'init', array( $this, 'register_blocks' ), 100 );
 		add_action( 'init', array( $this, 'register_template_post_types' ) );
 		add_action( 'init', array( $this, 'register_meta_template_id' ) );
-		add_action( 'rest_api_init', array( $this, 'allow_searching_for_templates' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_script_and_style' ), 100 );
 
 		add_action(
@@ -86,8 +85,8 @@ class Full_Site_Editing {
 				),
 				'menu_icon'             => 'dashicons-layout',
 				'public'                => false,
-				'show_ui'               => true,
-				'show_in_menu'          => true,
+				'show_ui'               => false,
+				'show_in_menu'          => false,
 				'rewrite'               => false,
 				'show_in_rest'          => true,
 				'rest_base'             => 'templates',
@@ -142,8 +141,8 @@ class Full_Site_Editing {
 				),
 				'menu_icon'             => 'dashicons-layout',
 				'public'                => false,
-				'show_ui'               => true,
-				'show_in_menu'          => true,
+				'show_ui'               => false,
+				'show_in_menu'          => false,
 				'rewrite'               => false,
 				'show_in_rest'          => true,
 				'rest_base'             => 'template_parts',
@@ -360,28 +359,6 @@ class Full_Site_Editing {
 				'render_callback' => 'render_site_logo',
 			)
 		);
-	}
-
-	/**
-	 * This will set the `wp_template` and `wp_template_part` post types to `public` to support
-	 * the core search endpoint, which looks for it.
-	 */
-	public function allow_searching_for_templates() {
-		$post_type = get_post_type_object( 'wp_template' );
-		if ( ! ( $post_type instanceof WP_Post_Type ) ) {
-			return;
-		}
-
-		// Setting this to `public` will allow it to be found in the search endpoint.
-		$post_type->public = true;
-
-		$post_type = get_post_type_object( 'wp_template_part' );
-		if ( ! ( $post_type instanceof WP_Post_Type ) ) {
-			return;
-		}
-
-		// Setting this to `public` will allow it to be found in the search endpoint.
-		$post_type->public = true;
 	}
 
 	/**
