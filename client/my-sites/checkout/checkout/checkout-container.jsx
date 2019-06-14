@@ -54,7 +54,7 @@ class CheckoutContainer extends React.Component {
 							plan={ plan }
 							setHeaderText={ this.setHeaderText }
 							reduxStore={ reduxStore }
-							shouldShowSecondary={ shouldShowCart }
+							shouldShowCart={ shouldShowCart }
 						>
 							{ this.props.children }
 						</Checkout>
