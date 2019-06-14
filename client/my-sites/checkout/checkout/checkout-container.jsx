@@ -45,7 +45,7 @@ class CheckoutContainer extends React.Component {
 			<>
 				{ this.renderCheckoutHeader() }
 				<div className="checkout__container">
-					<CheckoutData>
+					<CartData>
 						<Checkout
 							product={ product }
 							purchaseId={ purchaseId }
@@ -64,7 +64,7 @@ class CheckoutContainer extends React.Component {
 								<SecondaryCart selectedSite={ selectedSite } />
 							</CartData>
 						) }
-					</CheckoutData>
+					</CartData>
 				</div>
 			</>
 		);
