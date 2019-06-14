@@ -81,7 +81,6 @@ import { getCurrentUserCountryCode } from 'state/current-user/selectors';
 import { canDomainAddGSuite } from 'lib/gsuite';
 import { getDomainNameFromReceiptOrCart } from 'lib/domains/cart-utils';
 import { fetchSitesAndUser } from 'lib/signup/step-actions';
-import { siteQualifiesForPageBuilder, getEditHomeUrl } from 'lib/signup/page-builder';
 import { getProductsList, isProductsListFetching } from 'state/products-list/selectors';
 import QueryProducts from 'components/data/query-products-list';
 import { isRequestingSitePlans } from 'state/sites/plans/selectors';
@@ -455,9 +454,6 @@ export class Checkout extends React.Component {
 		const queryParam = displayModeParam ? `?${ displayModeParam }` : '';
 
 		if ( this.props.isEligibleForCheckoutToChecklist && ( receipt || receiptId ) ) {
-			if ( this.props.redirectToPageBuilder ) {
-				return getEditHomeUrl( selectedSiteSlug );
-			}
 			const destination = abtest( 'improvedOnboarding' ) === 'main' ? 'checklist' : 'view';
 
 			return `/${ destination }/${ selectedSiteSlug }${ queryParam }`;
@@ -790,7 +786,6 @@ export default connect(
 				selectedSiteId,
 				props.cart
 			),
-			redirectToPageBuilder: siteQualifiesForPageBuilder( state, selectedSiteId ),
 			productsList: getProductsList( state ),
 			isProductsListFetching: isProductsListFetching( state ),
 			isPlansListFetching: isRequestingPlans( state ),
