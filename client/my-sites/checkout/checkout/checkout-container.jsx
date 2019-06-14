@@ -30,7 +30,16 @@ class CheckoutContainer extends React.Component {
 	};
 
 	render() {
-		const { product, purchaseId, feature, code, plan, selectedSite, reduxStore } = this.props;
+		const {
+			product,
+			purchaseId,
+			feature,
+			code,
+			plan,
+			selectedSite,
+			reduxStore,
+			shouldShowSecondary,
+		} = this.props;
 
 		return (
 			<>
@@ -45,10 +54,15 @@ class CheckoutContainer extends React.Component {
 							plan={ plan }
 							setHeaderText={ this.setHeaderText }
 							reduxStore={ reduxStore }
-						/>
-						<CartData>
-							<SecondaryCart selectedSite={ selectedSite } />
-						</CartData>
+						>
+							{ this.props.children }
+						</Checkout>
+
+						{ shouldShowSecondary && (
+							<CartData>
+								<SecondaryCart selectedSite={ selectedSite } />
+							</CartData>
+						) }
 					</CheckoutData>
 				</div>
 			</>
