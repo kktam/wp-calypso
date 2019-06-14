@@ -23,7 +23,7 @@ import CompactCard from 'components/card/compact';
 import Button from 'components/button';
 import { addItem } from 'lib/upgrades/actions';
 import { conciergeSessionItem } from 'lib/cart-values/cart-items';
-import { siteQualifiesForPageBuilder, getEditHomeUrl } from 'lib/signup/page-builder';
+import { siteQualifiesForPageBuilder } from 'lib/signup/page-builder';
 import isEligibleForDotcomChecklist from 'state/selectors/is-eligible-for-dotcom-checklist';
 import { getCurrentUserCurrencyCode } from 'state/current-user/selectors';
 import { getSiteSlug } from 'state/sites/selectors';
@@ -36,7 +36,6 @@ import {
 import { recordTracksEvent } from 'state/analytics/actions';
 import { localize } from 'i18n-calypso';
 import { isRequestingSitePlans, getPlansBySiteId } from 'state/sites/plans/selectors';
-import analytics from 'lib/analytics';
 
 /**
  * Style dependencies
@@ -306,34 +305,10 @@ export class ConciergeSessionNudge extends React.Component {
 	}
 
 	handleClickDecline = () => {
-		const {
-			siteSlug,
-			receiptId,
-			isEligibleForChecklist,
-			trackUpsellButtonClick,
-			redirectToPageBuilder,
-		} = this.props;
+		const { trackUpsellButtonClick, handleCheckoutCompleteRedirect } = this.props;
 
 		trackUpsellButtonClick( 'decline' );
-
-		// if ( ! receiptId ) {
-		// 	// Send the user to a generic page (not post-purchase related).
-		// 	page( `/stats/day/${ siteSlug }` );
-		// } else if ( isEligibleForChecklist ) {
-		// 	if ( redirectToPageBuilder ) {
-		// 		return page( getEditHomeUrl( siteSlug ) );
-		// 	}
-		// 	analytics.tracks.recordEvent( 'calypso_checklist_assign', {
-		// 		site: siteSlug,
-		// 		plan: 'paid',
-		// 	} );
-		// 	page( `/checklist/${ siteSlug }` );
-		// } else {
-		// 	page( `/checkout/thank-you/${ siteSlug }/${ receiptId }` );
-		// }
-
-		console.log('rand is ' + this.props.rand);
-		this.props.handleCheckoutCompleteRedirect();
+		handleCheckoutCompleteRedirect();
 	};
 
 	handleClickAccept = () => {
