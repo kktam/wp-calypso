@@ -47,6 +47,7 @@ export function checkout( context, next ) {
 			plan={ plan }
 			selectedSite={ selectedSite }
 			reduxStore={ context.store }
+			shouldShowSecondary={ true }
 		/>
 	);
 
@@ -134,9 +135,14 @@ export function conciergeSessionNudge( context, next ) {
 	}
 
 	context.primary = (
-		<CartData>
-			<ConciergeSessionNudge receiptId={ Number( receiptId ) } selectedSiteId={ selectedSite.ID } />
-		</CartData>
+		<CheckoutContainer shouldShowSecondary={ false } selectedSite={ selectedSite }>
+			<CartData>
+				<ConciergeSessionNudge
+					receiptId={ Number( receiptId ) }
+					selectedSiteId={ selectedSite.ID }
+				/>
+			</CartData>
+		</CheckoutContainer>
 	);
 
 	next();
