@@ -33,7 +33,6 @@ import WpcomFAQ from './wpcom-faq';
 import CartData from 'components/data/cart';
 import QueryPlans from 'components/data/query-plans';
 import QuerySitePlans from 'components/data/query-site-plans';
-import QuerySites from 'components/data/query-sites';
 import { isEnabled } from 'config';
 import {
 	findPlansKeys,
@@ -53,7 +52,7 @@ import isHappychatAvailable from 'state/happychat/selectors/is-happychat-availab
 import { getDiscountByName } from 'lib/discounts';
 import { getDecoratedSiteDomains } from 'state/sites/domains/selectors';
 import { getSiteOption, getSitePlan, getSiteSlug, isJetpackSite } from 'state/sites/selectors';
-import { getSiteType } from 'state/signup/steps/site-type/selectors';
+import { getSiteType as getSignupSiteType } from 'state/signup/steps/site-type/selectors';
 import { getTld } from 'lib/domains';
 import { isDiscountActive } from 'state/selectors/get-active-discount.js';
 import { selectSiteId as selectHappychatSiteId } from 'state/help/actions';
@@ -386,7 +385,6 @@ export class PlansFeaturesMain extends Component {
 				{ plansWithScroll && this.renderFreePlanBanner() }
 				<QueryPlans />
 				<QuerySitePlans siteId={ siteId } />
-				<QuerySites siteId={ siteId } />
 				{ this.getPlanFeatures() }
 				<CartData>
 					<PaymentMethods />
@@ -478,7 +476,7 @@ export default connect(
 		const sitePlan = getSitePlan( state, siteId );
 
 		const siteType = props.isInSignup
-			? getSiteType( state )
+			? getSignupSiteType( state )
 			: getSiteTypePropertyValue( 'id', getSiteOption( state, siteId, 'site_segment' ), 'slug' );
 
 		return {
