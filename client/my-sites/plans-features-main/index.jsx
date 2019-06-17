@@ -439,9 +439,21 @@ PlansFeaturesMain.defaultProps = {
 	plansWithScroll: false,
 };
 
-const guessCustomerType = ( state, props ) => {
+const guessCustomerType = ( state, siteType, props ) => {
 	if ( props.customerType ) {
 		return props.customerType;
+	}
+
+	if ( abtest( 'popularPlanBy' ) === 'siteType' ) {
+		// Use siteType to choose the default tab so that the "POPULAR" label
+		// is visible when the page is first loaded.
+		switch ( siteType ) {
+			case 'blog':
+			case 'professional':
+				return 'personal';
+			default:
+				return 'business';
+		}
 	}
 
 	const site = props.site;
@@ -486,7 +498,7 @@ export default connect(
 			// universal.
 			withWPPlanTabs: isDiscountActive( getDiscountByName( 'new_plans' ), state ),
 			plansWithScroll: ! props.displayJetpackPlans && props.plansWithScroll,
-			customerType: guessCustomerType( state, props ),
+			customerType: guessCustomerType( state, siteType, props ),
 			domains: getDecoratedSiteDomains( state, siteId ),
 			isChatAvailable: isHappychatAvailable( state ),
 			isJetpack: isJetpackSite( state, siteId ),
