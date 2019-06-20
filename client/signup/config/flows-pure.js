@@ -15,7 +15,7 @@ import { addQueryArgs } from 'lib/route';
 export function generateFlows( {
 	getSiteDestination = noop,
 	getRedirectDestination = noop,
-	getChecklistDestination = noop,
+	getSignupDestination = noop,
 } = {} ) {
 	const flows = {
 		account: {
@@ -36,9 +36,9 @@ export function generateFlows( {
 				'domains-with-preview',
 				'plans-business',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'Create an account and a blog and then add the business plan to the users cart.',
-			lastModified: '2019-06-17',
+			lastModified: '2019-06-20',
 		},
 
 		premium: {
@@ -51,9 +51,9 @@ export function generateFlows( {
 				'domains-with-preview',
 				'plans-premium',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'Create an account and a blog and then add the premium plan to the users cart.',
-			lastModified: '2019-06-17',
+			lastModified: '2019-06-20',
 		},
 
 		personal: {
@@ -66,9 +66,9 @@ export function generateFlows( {
 				'domains-with-preview',
 				'plans-personal',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'Create an account and a blog and then add the personal plan to the users cart.',
-			lastModified: '2019-06-17',
+			lastModified: '2019-06-20',
 		},
 
 		free: {
@@ -80,9 +80,9 @@ export function generateFlows( {
 				'site-style-with-preview',
 				'domains-with-preview',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'Create an account and a blog and default to the free plan.',
-			lastModified: '2019-06-17',
+			lastModified: '2019-06-20',
 		},
 
 		blog: {
@@ -117,9 +117,9 @@ export function generateFlows( {
 
 		main: {
 			steps: [ 'user', 'about', 'domains', 'plans' ],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'The current best performing flow in AB tests',
-			lastModified: '2019-04-30',
+			lastModified: '2019-06-20',
 		},
 
 		onboarding: {
@@ -132,9 +132,9 @@ export function generateFlows( {
 				'domains-with-preview',
 				'plans',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'The improved onboarding flow.',
-			lastModified: '2019-06-05',
+			lastModified: '2019-06-20',
 		},
 
 		'onboarding-dev': {
@@ -147,9 +147,9 @@ export function generateFlows( {
 				'domains-with-preview',
 				'plans',
 			],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'A temporary flow for holding under-development steps',
-			lastModified: '2019-04-30',
+			lastModified: '2019-06-20',
 		},
 
 		'delta-discover': {
@@ -181,9 +181,9 @@ export function generateFlows( {
 
 		desktop: {
 			steps: [ 'about', 'themes', 'domains', 'plans', 'user' ],
-			destination: getChecklistDestination,
+			destination: getSignupDestination,
 			description: 'Signup flow for desktop app',
-			lastModified: '2019-04-30',
+			lastModified: '2019-06-20',
 		},
 
 		developer: {
@@ -321,9 +321,9 @@ export function generateFlows( {
 
 	flows.private = {
 		steps: [ 'user', 'site' ],
-		destination: getChecklistDestination,
+		destination: getSignupDestination,
 		description: 'Test private site signup',
-		lastModified: '2018-10-22',
+		lastModified: '2019-06-20',
 	};
 
 	flows[ 'launch-site' ] = {
